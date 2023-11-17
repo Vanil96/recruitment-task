@@ -1,0 +1,28 @@
+
+
+
+<div>
+    <form [formGroup]="formGroup">
+    <mat-form-field>
+        <mat-label>Vat rate</mat-label>
+        <mat-select formControlName="vatRate" (selectionChange)="onInputsChange('vatRate')">
+            <mat-option *ngFor="let option of vatOptions" [value]="option.value">{{ option.label }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Netto</mat-label>
+        <input matInput type="number" placeholder="Netto" formControlName="netto" (keyup)="onInputsChange('netto')">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>VAT</mat-label>
+        <input matInput type="number" placeholder="VAT" formControlName="vat" (keyup)="onInputsChange('vat')">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Brutto</mat-label>
+        <input matInput type="number" placeholder="Brutto" formControlName="brutto" (keyup)="onInputsChange('brutto')"> 
+    </mat-form-field>
+</form>
+</div>

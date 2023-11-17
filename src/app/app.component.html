@@ -1,6 +1,70 @@
-<fieldset style="max-width:700px; margin:auto; margin-top:10vh; padding:1.5rem;">
+<fieldset class="container" style="margin-top:5vh">
   <legend>Form container</legend>
 
+  <form [formGroup]="form">
+
+    <fieldset style="padding-bottom:1.5rem">
+      <legend>Simple inputs</legend>
+      <mat-form-field>
+        <mat-label>Nip</mat-label>
+        <input matInput type="text" placeholder="Nip" formControlName="nip">
+        <mat-error>{{getNipErrorMessage()}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput type="email" placeholder="Email" formControlName="email">
+        <mat-error>{{getEmailErrorMessage()}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Payment date</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="paymentDate" #dateInput>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error>{{getPaymentDateErrorMessage()}} </mat-error>
+      </mat-form-field>
+
+    </fieldset>
+
+    <fieldset>
+      <legend>Single vat-group</legend>
+      <app-vat-group formControlName="singleVatGroup"></app-vat-group>
+    </fieldset>
+
+    <fieldset>
+      <legend>Multi vat-group</legend>
+      <ng-container *ngFor="let vatGroup of vatGroupList.controls; let i = index">
+        <div class="vat-group-row">
+          <app-vat-group [formControl]="vatGroup"></app-vat-group>
+          <button mat-icon-button color="warn" (click)="removeVatGroup(i)"
+            class="remove-btn"><mat-icon>close</mat-icon></button>
+        </div>
+      </ng-container>
+      <button mat-stroked-button color="primary" (click)="addVatGroup()"><mat-icon>add</mat-icon>Add new</button>
+    </fieldset>
+
+    <fieldset>
+      <legend>Summary</legend>
+      <p>Total Netto: {{summary.totalNetto}}</p>
+      <p>Total Vat: {{summary.totalVat}}</p>
+      <p>Total Brutto: {{summary.totalBrutto}}</p>
+      <p>Payment date: {{ form.controls['paymentDate'].value | date:'yyyy/MM/dd' }}</p>
+    </fieldset>
+
+    <button mat-raised-button [color]="!form.invalid && 'primary'" (click)="onSubmit()"
+      style="margin-top:2rem"><mat-icon>send</mat-icon>Submit</button>
+  </form>
+</fieldset>
 
 
+<fieldset class="container" style="margin-top:3rem">
+  <legend>Form values</legend>
+  {{formValue | json}}
+</fieldset>
+
+<fieldset class="container">
+  <legend>actions</legend>
+  <button mat-stroked-button color="accent" (click)="setExampleValueForForm()">
+    Set example data (imit APIsetter)</button>
 </fieldset>
