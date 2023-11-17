@@ -17,7 +17,11 @@ interface Summary {
 export class AppComponent implements OnInit {
   form!: FormGroup;
   formValue = {};
-  summary: Summary = {}
+  summary: Summary = {
+    totalNetto: 0,
+    totalVat: 0,
+    totalBrutto:0
+  }
   private subscriptions: Subscription[] = [];
 
   constructor(
